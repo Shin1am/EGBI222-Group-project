@@ -139,11 +139,11 @@ Simply run the notebook cells in order to download audio, transcribe, translate,
 
 ## Contributors
 
--Yada Yimngam 6713359
--Nicharee Nunuan 6713363
--Pannawat Thongpron 6713376
--Pheemchayut Matures 6713387
--Lapasrada Tiatrakul 6713389
+- Yada Yimngam 6713359
+- Nicharee Nunuan 6713363
+- Pannawat Thongpron 6713376
+- Pheemchayut Matures 6713387
+- Lapasrada Tiatrakul 6713389
 
                       ♡   ╱|、
                           (˚ˎ 。7  
