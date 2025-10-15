@@ -5,6 +5,8 @@ This repository demonstrates a full NLP pipeline: data prep → text cleaning �
 
 ⁺˚⋆｡°✩₊✩°｡⋆˚⁺⁺˚⋆｡°✩₊✩°｡⋆˚⁺⁺˚⋆｡°✩₊✩°｡⋆˚⁺⁺˚⋆｡°✩₊✩°｡⋆˚⁺⁺˚⋆｡°✩₊✩°｡⋆˚⁺
 
+---
+
 ## Key Features
 
 - Data Preprocessing: Download, transcribe and translated the audio based on youtube-id.
@@ -17,23 +19,27 @@ This repository demonstrates a full NLP pipeline: data prep → text cleaning �
 
 - CLI & Notebook: run end-to-end from command line or explore via notebooks.
 
+---
+
 ## Project Structure ദ്ദി(ᵔᗜᵔ)
 
+```bash
 .
-├─ dataset/
-│  ├─ youtube-videos-data-for-ml-and-trend-analysis/               
-│       ├─ youtube_data.csv    # original CSV
-|       ├─ final_df            # final dataset that have been modified.
-│    
-├─ EGBI222_project_2.ipynb      # jupyter notebook for this project
-│   
-└─ README.md
-
+├── dataset/
+│   └── youtube-videos-data-for-ml-and-trend-analysis/
+│        ├── youtube_data.csv        # Original dataset
+│        ├── final_df.csv            # Preprocessed dataset (translated + labeled)
+│
+├── EGBI222_project_2.ipynb          # Main notebook (end-to-end workflow)
+│
+└── README.md
+```
+---
 
 ## Problem & Data
-- ###Task: Multiclass classification of YouTube video category (label) from text features (transcribed audio).
+- ### Task: Multiclass classification of YouTube video category (label) from text features (transcribed audio).
 
-- ###Expected Columns in the input CSV (example):
+- ### Expected Columns in the input CSV (example):
 
     - video_id (optional)
 
@@ -45,157 +51,93 @@ This repository demonstrates a full NLP pipeline: data prep → text cleaning �
 
 You can map YouTube’s official category IDs to human-readable names or use your own label schema.
 
-## Setup (⸝⸝> ᴗ•⸝⸝)
-### 1) Clone & create environment
-git clone https://github.com/<your-username>/<your-repo>.git
-cd <your-repo>
+---
 
-# Using venv
-python -m venv .venv
-source .venv/bin/activate   # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
+# Workflow Overview
+1. **Download Audio**  
+   Extract audio from YouTube using `yt-dlp` based on video IDs.
 
-## requirements
-pandas
-numpy
-scikit-learn
-matplotlib
-seaborn
-joblib
-tqdm
-nltk
+2. **Transcription**  
+   Use **Whisper** to convert audio into text (speech-to-text).
 
-import nltk; nltk.download("stopwords"); nltk.download("wordnet"); nltk.download("omw-1.4")
+3. **Translation**  
+   Apply **Deep Translator** to ensure all text is in English.
 
+4. **Preprocessing**  
+   - Lowercasing, punctuation & stopword removal  
+   - Lemmatization (optional)
 
+5. **Vectorization & Modeling**  
+   Build Bag-of-Words and TF-IDF representations for text, then train models.
 
-## ˚₊· ͟͟͞͞➳❥ start 
+6. **Evaluation**  
+   Compare model accuracy and F1 scores, visualize confusion matrices.
 
-###Put your data
-data/raw/youtube_metadata.csv
+---
 
-###1) (Optional) Split data
+## 🧰 Requirements
 
-If your repo includes a splitter script, run it; otherwise most train.py scripts accept a single CSV and do an internal train/val/test split.
+You can run the notebook directly — no additional scripts needed.  
+Make sure these Python packages are installed:
 
-###2) Train (BoW baseline)
-python -m src.train \
-  --input_csv data/raw/youtube_metadata.csv \
-  --text_cols title description \
-  --label_col category \
-  --vectorizer bow \
-  --ngram 1 2 \
-  --min_df 2 \
-  --model multinb \
-  --save_dir models/
+```bash
+pip install pandas numpy scikit-learn matplotlib seaborn yt-dlp deep-translator openai-whisper
+```
 
 
-###3) Evaluate
-If train.py already prints metrics, you set. Otherwise:
-python -m src.evaluate \
-  --model_path models/model.joblib \
-  --vectorizer_path models/vectorizer.joblib \
-  --eval_csv data/processed/test.csv \
-  --text_cols title description \
-  --label_col category
+## ˚₊· ͟͟͞͞➳❥ How to run
 
-###4) Predict (single text or batch)
-#### Single example
-python -m src.predict \
-  --model_path models/model.joblib \
-  --vectorizer_path models/vectorizer.joblib \
-  --title \
-  --description
+You can execute this project either directly in **Google Colab** or by running it locally.
 
-#### Batch (CSV with title/description)
-python -m src.predict \
-  --model_path models/model.joblib \
-  --vectorizer_path models/vectorizer.joblib \
-  --input_csv data/raw/unlabeled.csv \
-  --output_csv data/predictions.csv \
-  --text_cols title description
+---
 
+### 🧭 Option 1: Run in Google Colab
 
-##Preprocessing
-Typical cleaning applied in src/preprocess.py:
+You can open and run the full notebook directly in Colab by clicking the badge below:
 
-- Lowercase
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1tr1mE7DNLKKROcIXu3vYRd2VNj13iTQB?usp=sharing)
 
-- Strip URLs, HTML, emojis, and punctuation
+This will launch an interactive environment with all dependencies preinstalled.  
+Simply run the notebook cells in order to download audio, transcribe, translate, and train the models.
 
-- Remove digits (optional)
+---
 
-- Remove stopwords
+### 💻 Option 2: Run Locally
 
-- Lemmatize (optional)
+1. **Clone the repository**
 
-- Join title + description (and optionally tags)
+```bash
+   git clone https://github.com/Shin1am/EGBI222-Group-project.git
+   cd EGBI222-Group-project
+   ```
 
-Configure these via flags or a small config in src/config.py.
+2. **Open the Notebook**
 
-##Models
+```bash
+   jupyter notebook EGBI222_project_2.ipynb
+   ```
 
-Multinomial Naive Bayes: strong BoW baseline, fast and robust on sparse text.
+3. **Set your dataset path**
 
-Logistic Regression (One-vs-Rest): good accuracy, interpretable weights.
+   Update the dataset path in the notebook before running the preprocessing section:
 
-Linear SVM (SVC with linear kernel): strong linear baseline on TF-IDF.
+```py
+   df = pd.read_csv("your-path-to-csv")
+```
 
-Try both BoW and TF-IDF; often TF-IDF + Linear SVM gives a strong classic baseline.
+4. **Run all cells sequentially**
 
-##Metrics
+    The notebook will:
 
-- During training/evaluation you’ll see:
+        - Download audio using yt-dlp
 
-- Accuracy
+        - Transcribe with Whisper
 
-- Macro / Micro F1-score
+        - Translate with Deep Translator
 
-- Confusion matrix
+        - Train and evaluate multiple ML models
 
-- Per-class precision/recall (classification report)
-
-##Reproducibility
-
-- Fixed seeds (e.g., --seed 42) for splits and model initialization.
-
-- Save both model.joblib and vectorizer.joblib for consistent inference.
-
-- Log hyperparameters in a run config or artifact filename.
-
-##Example Commands
-### Multinomial NB + BoW
-python -m src.train --vectorizer bow --model multinb --ngram 1 2 --min_df 2
-
-### Logistic Regression + TF-IDF
-python -m src.train --vectorizer tfidf --model logreg --ngram 1 2 --C 2.0 --max_iter 200
-
-### Linear SVM + TF-IDF (strong baseline)
-python -m src.train --vectorizer tfidf --model svm --ngram 1 2 --C 1.0
-
-#Notebook
-Open notebooks/01_eda_and_baseline.ipynb for:
-
-EDA (label distribution, text lengths)
-
-Quick BoW/TF-IDF baselines
-
-Confusion matrix plots
-
-##Checklist ⸜(｡˃ ᵕ ˂ )⸝♡
-
- Data placed in data/raw/…
-
- Preprocessing flags set (stopwords, ngrams, min_df)
-
- Vectorizer & model trained and saved in /models
-
- Evaluation run on held-out test set
-
- predict.py tested on sample lines
-
- 
-##Contributors
+## Contributors
 
 Yada Yimngam 6713359
 Nicharee Nunuan 6713363
