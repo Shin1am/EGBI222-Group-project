@@ -95,7 +95,7 @@ You can execute this project either directly in **Google Colab** or by running i
 
 You can open and run the full notebook directly in Colab by clicking the badge below:
 
-[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1tr1mE7DNLKKROcIXu3vYRd2VNj13iTQB?usp=sharing)
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1SEwpaf0_gApNJlNVV2HIPY8oEnfN5h4j)
 
 This will launch an interactive environment with all dependencies preinstalled.  
 Simply run the notebook cells in order to download audio, transcribe, translate, and train the models.
@@ -129,21 +129,21 @@ Simply run the notebook cells in order to download audio, transcribe, translate,
 
     The notebook will:
 
-        - Download audio using yt-dlp
+    - Download audio using yt-dlp
 
-        - Transcribe with Whisper
+    - Transcribe with Whisper
 
-        - Translate with Deep Translator
+    - Translate with Deep Translator
 
-        - Train and evaluate multiple ML models
+    - Train and evaluate multiple ML models
 
 ## Contributors
 
-Yada Yimngam 6713359
-Nicharee Nunuan 6713363
-Pannawat Thongpron 6713376
-Pheemchayut Matures 6713387
-Lapasrada Tiatrakul 6713389
+-Yada Yimngam 6713359
+-Nicharee Nunuan 6713363
+-Pannawat Thongpron 6713376
+-Pheemchayut Matures 6713387
+-Lapasrada Tiatrakul 6713389
 
                       ♡   ╱|、
                           (˚ˎ 。7  
